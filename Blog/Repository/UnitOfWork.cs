@@ -1,5 +1,6 @@
 ﻿using Blog.Data;
 using Blog.Repository.Interfaces;
+using Blog.Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace Blog.Repository
         public UnitOfWork(DataContext context)
         {
             _context = context;
+            Categories = new CategoryRepository(_context);
+            Posts = new PostRepository(_context);
+            Comments = new CommentRepository(_context);
         }
         public ICategoryRepository Categories { get; set; }
         public IPostRepository Posts { get; set; }

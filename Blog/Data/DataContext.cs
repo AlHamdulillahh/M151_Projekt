@@ -24,15 +24,19 @@ namespace Blog.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Category>().HasKey(x => x.Id);
+            builder.Entity<Post>().HasKey(x => x.Id);
+            builder.Entity<Comment>().HasKey(x => x.Id);
+
             builder.Entity<Category>().ToTable("Category");
             builder.Entity<Post>().ToTable("Post");
             builder.Entity<Comment>().ToTable("Comment");
 
-            builder.Entity<Category>().Property<int>(x => x.CategoryId)
+            builder.Entity<Category>().Property<int>(x => x.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Post>().Property<int>(x => x.PostId)
+            builder.Entity<Post>().Property<int>(x => x.Id)
                 .ValueGeneratedOnAdd();
-            builder.Entity<Comment>().Property<int>(x => x.CommentId)
+            builder.Entity<Comment>().Property<int>(x => x.Id)
                 .ValueGeneratedOnAdd();
         }
     }

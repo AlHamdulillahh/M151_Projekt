@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Blog.Repository.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Blog.Data.Models
 {
-    public class Comment
+    public class Comment : IEntity<int>
     {
-        public int CommentId { get; set; }
+        public int Id { get; set; }
         public string Body { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public int PostId { get; set; }

@@ -1,6 +1,8 @@
 using Blog.Data;
 using Blog.Data.Seed;
 using Blog.Helpers;
+using Blog.Repository;
+using Blog.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,11 +41,15 @@ namespace Blog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blog", Version = "v1" });
             });
+
+            // Database and Identity
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("Default"));
             });
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+
+            // Json Web-Tokens
             var jwtConfig = Configuration.GetSection("JwtConfig").Get<JwtConfig>();
             services.AddSingleton(jwtConfig);
             services.AddAuthentication().AddJwtBearer(options =>
@@ -60,6 +66,9 @@ namespace Blog
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret))
                 };
             });
+
+            // UnitOfWork / Service Layer
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
