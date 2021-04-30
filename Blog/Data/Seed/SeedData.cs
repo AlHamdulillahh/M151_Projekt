@@ -21,6 +21,7 @@ namespace Blog.Data.Seed
 
 
             context.SaveChanges();
+            context.DetachUnchangedEntries();
         }
 
         private static void SeedRoles(RoleManager<IdentityRole> roleManager)

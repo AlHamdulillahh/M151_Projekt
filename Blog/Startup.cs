@@ -1,4 +1,5 @@
 using Blog.Data;
+using Blog.Data.Seed;
 using Blog.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,9 +39,9 @@ namespace Blog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blog", Version = "v1" });
             });
-            services.AddDbContextPool<DataContext>(options =>
+            services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                options.UseNpgsql(Configuration.GetConnectionString("Default"));
             });
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>();
             var jwtConfig = Configuration.GetSection("JwtConfig").Get<JwtConfig>();
@@ -62,13 +63,16 @@ namespace Blog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog v1"));
+                provider.GetService<DataContext>().EnsureDbCreatedAndSeeded(
+                    provider.GetRequiredService<UserManager<IdentityUser>>(),
+                    provider.GetRequiredService<RoleManager<IdentityRole>>());
             }
 
             app.UseHttpsRedirection();
