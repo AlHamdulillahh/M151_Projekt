@@ -29,9 +29,9 @@ namespace Blog.Auth
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("Id", user.Id),
+                    new Claim("UserId", user.Id),
                     new Claim("UserName", user.UserName),
-                    new Claim("Role", roles.FirstOrDefault())
+                    new Claim(ClaimTypes.Role, roles.FirstOrDefault())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
@@ -45,7 +45,7 @@ namespace Blog.Auth
         public string GetUserId(ClaimsPrincipal user)
         {
             var identity = user.Identity as ClaimsIdentity;
-            return identity.Claims.Where(x => x.Type == "Id").FirstOrDefault()?.Value;
+            return identity.Claims.Where(x => x.Type == "UserId").FirstOrDefault()?.Value;
         }
     }
 }

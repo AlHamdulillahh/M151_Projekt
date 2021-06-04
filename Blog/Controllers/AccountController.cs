@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Blog.Controllers
@@ -30,7 +31,7 @@ namespace Blog.Controllers
         }
 
         [HttpPost]
-        [Route("api/Login")]
+        [Route("api/Account/Login")]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -53,11 +54,26 @@ namespace Blog.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/Users")]
-        public ActionResult<IEnumerable<IdentityUser>> GetUsers()
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Route("api/Account/Users")]
+        public async Task<ActionResult<List<UserViewModel>>> GetUsers()
         {
-            return _userManager.Users.ToList();
+            var users = _userManager.Users.ToList();
+            var viewModelBin = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var viewModel = new UserViewModel
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = await _userManager.GetRolesAsync(user)
+                };
+
+                viewModelBin.Add(viewModel);
+            }
+
+            return viewModelBin;
         }
     }
 }

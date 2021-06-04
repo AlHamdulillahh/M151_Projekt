@@ -1,8 +1,12 @@
+using AutoMapper;
 using Blog.Data;
 using Blog.Data.Seed;
 using Blog.Helpers;
+using Blog.Mapper;
 using Blog.Repository;
 using Blog.Repository.Interfaces;
+using Blog.Services;
+using Blog.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,10 +19,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Blog
@@ -35,8 +41,16 @@ namespace Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => { o.AddPolicy("AllowOrigins", builder => builder.AllowAnyOrigin()); });
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            /* .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+            */
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Blog", Version = "v1" });
@@ -69,6 +83,15 @@ namespace Blog
 
             // UnitOfWork / Service Layer
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<ICommentService, CommentService>();
+
+            // Mapper
+            services.AddTransient(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            }).CreateMapper());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

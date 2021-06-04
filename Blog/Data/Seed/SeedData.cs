@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Blog.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Blog.Data.Seed
 
             SeedRoles(roleManager);
             SeedUsers(userManager);
+            SeedCategories();
+            SeedPosts();
+            SeedComments();
 
 
             context.SaveChanges();
@@ -72,6 +76,83 @@ namespace Blog.Data.Seed
 
                 userManager.AddToRoleAsync(users[0], "Admin").Wait();
                 userManager.AddToRoleAsync(users[1], "Benutzer");
+            }
+        }
+
+        private static void SeedCategories()
+        {
+            if (!_context.Categories.Any())
+            {
+                var categories = new Category[]
+                {
+                    new Category
+                    {
+                        Id = 1,
+                        Name = "Web-Development"
+                    },
+                    new Category
+                    {
+                        Id = 2,
+                        Name = "Mobile-Development"
+                    },
+                    new Category
+                    {
+                        Id = 3,
+                        Name = "Python"
+                    }
+                };
+
+                _context.Categories.AddRange(categories);
+            }
+        }
+
+        private static void SeedPosts()
+        {
+            if (!_context.Posts.Any())
+            {
+                var posts = new Post[]
+                {
+                    new Post
+                    {
+                        Id = 1,
+                        Title = "What's new in PHP 8",
+                        Body = "Union Types: Given the dynamically typed nature of PHP, there are lots of cases where union types can be useful.",
+                        CategoryId = 1
+                    },
+                    new Post
+                    {
+                        Id = 2,
+                        Title = "5 Important Python One-Liners",
+                        Body = "The One-Liners showed in this post will make your life so much easier",
+                        CategoryId = 3
+                    }
+                };
+
+                _context.Posts.AddRange(posts);
+            }
+        }
+
+        private static void SeedComments()
+        {
+            if (!_context.Comments.Any())
+            {
+                var comments = new Comment[]
+                {
+                    new Comment
+                    {
+                        Id = 1,
+                        Body = "Great post!",
+                        PostId = 1
+                    },
+                    new Comment
+                    {
+                        Id = 2,
+                        Body = "Good post. Helped alot",
+                        PostId = 2
+                    }
+                };
+
+                _context.Comments.AddRange(comments);
             }
         }
     }

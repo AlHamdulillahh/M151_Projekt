@@ -20,6 +20,7 @@ namespace Blog.Repository.Repositories
             _entities = Context.Set<TEntity>();
         }
 
+        // GetAll
         public Task<List<TEntity>> GetAllAsync()
         {
             return _entities.ToListAsync();
@@ -39,7 +40,7 @@ namespace Blog.Repository.Repositories
 
             return query.ToListAsync();
         }
-
+        // Get
         public Task<TEntity> GetAsync(TKey id)
         {
             return _entities.FindAsync(id).AsTask();
@@ -57,7 +58,7 @@ namespace Blog.Repository.Repositories
 
             return query.FirstOrDefaultAsync(e => e.Id.Equals(id));
         }
-
+        // Find
         public Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var query = _entities.Where(predicate);
@@ -81,6 +82,7 @@ namespace Blog.Repository.Repositories
 
             return query.ToListAsync();
         }
+        // Add, Update and Delete
 
         public TEntity Add(TEntity entity)
         {
@@ -90,7 +92,8 @@ namespace Blog.Repository.Repositories
 
         public TEntity Update(TEntity entity)
         {
-            _entities.Update(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+            // _entities.Update(entity);
             return entity;
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Blog.Data.Models
@@ -10,6 +11,7 @@ namespace Blog.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        // [JsonIgnore]
         public ICollection<Post> Posts { get; set; }
     }
 }
