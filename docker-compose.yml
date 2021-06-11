@@ -3,6 +3,8 @@ version: '3.4'
 services:
   blog:
     image: ${DOCKER_REGISTRY-}blog
+    ports:
+      - "8000:443" 
     build:
       context: .
       dockerfile: Blog/Dockerfile

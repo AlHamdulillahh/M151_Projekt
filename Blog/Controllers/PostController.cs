@@ -22,14 +22,12 @@ namespace Blog.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly DataContext _context;
         public IPostService PostService { get; }
         public IAuthService AuthService { get; }
         public IMapper Mapper { get; }
 
-        public PostController(DataContext context, IPostService postService, UserManager<IdentityUser> userManager, IMapper mapper)
+        public PostController(IPostService postService, UserManager<IdentityUser> userManager, IMapper mapper)
         {
-            _context = context;
             PostService = postService;
             AuthService = new AuthService(userManager);
             Mapper = mapper;
@@ -69,11 +67,12 @@ namespace Blog.Controllers
 
             if (post == null)
             {
-                return NotFound();
+                return NotFound("The post you're searching for doesn't exist");
             }
 
             var viewModel = Mapper.Map<Post, PostViewModel>(post);
             viewModel.Comments = Mapper.Map<List<Comment>, List<CommentViewModel>>(post.Comments.ToList());
+            viewModel.User = Mapper.Map<IdentityUser, UserViewModel>(post.User);
 
             return viewModel;
 
@@ -82,11 +81,12 @@ namespace Blog.Controllers
         // PUT: api/Post/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> PutPost(int id, PostViewModel post)
         {
 
             var existingPost = await PostService.Get(id, "Category");
-            if (existingPost == null) return NotFound();
+            if (existingPost == null) return NotFound("The post you're trying to edit doesn't exist");
 
             var modifiedPost = Mapper.Map(post, existingPost);
             await PostService.Update(modifiedPost);
@@ -97,7 +97,7 @@ namespace Blog.Controllers
         // POST: api/Post
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
             post.UserId = AuthService.GetUserId(User);
@@ -108,19 +108,15 @@ namespace Blog.Controllers
 
         // DELETE: api/Post/5
 
-        /// <summary>
-        /// Deletes a specific Post.
-        /// </summary>
-        /// <param name="id"></param>     
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> DeletePost(int id)
         {
-            // await PostService.Delete(id);
             var post = await PostService.Get(id, "Category");
 
             if (post == null)
             {
-                return NotFound();
+                return NotFound("The post you're trying to delete doesn't exist");
             }
 
             await PostService.Delete(post);

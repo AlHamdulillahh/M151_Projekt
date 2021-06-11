@@ -10,6 +10,9 @@ using Blog.Data.Models;
 using Blog.Services.Interfaces;
 using AutoMapper;
 using Blog.ViewModels;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Blog.Controllers
 {
@@ -17,13 +20,11 @@ namespace Blog.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly DataContext _context;
         public ICategoryService CategoryService { get; }
         public IMapper Mapper { get; }
 
-        public CategoryController(DataContext context, ICategoryService categoryService, IMapper mapper)
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
-            _context = context;
             CategoryService = categoryService;
             Mapper = mapper;
         }
@@ -40,7 +41,7 @@ namespace Blog.Controllers
         // POST: api/Category
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory([Bind("Id, Name")]Category category)
+        public async Task<ActionResult<Category>> PostCategory([Bind("Id, Name")] Category category)
         {
             await CategoryService.Add(category);
 
@@ -49,16 +50,16 @@ namespace Blog.Controllers
 
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await CategoryService.Get(id);
             if (category == null)
             {
-                return NotFound();
+                return NotFound("The category you're trying to delete doesn't exist");
             }
 
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await CategoryService.Delete(category);
 
             return NoContent();
         }

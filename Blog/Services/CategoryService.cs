@@ -26,11 +26,22 @@ namespace Blog.Services
             return _unitOfWork.Categories.GetAsync(id);
         }
 
+        public Task<Category> Get(int id, string include)
+        {
+            return _unitOfWork.Categories.GetAsync(id, include);
+        }
+
         public async Task<Category> Add(Category category)
         {
             _unitOfWork.Categories.Add(category);
             await _unitOfWork.CompleteAsync();
             return category;
+        }
+
+        public async Task<int> Delete(Category category)
+        {
+            _unitOfWork.Categories.Remove(category);
+            return await _unitOfWork.CompleteAsync();
         }
     }
 }

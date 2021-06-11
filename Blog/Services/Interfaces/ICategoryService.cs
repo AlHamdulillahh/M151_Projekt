@@ -10,6 +10,8 @@ namespace Blog.Services.Interfaces
     {
         Task<List<Category>> GetAll();
         Task<Category> Get(int id);
+        Task<Category> Get(int id, string include);
         Task<Category> Add(Category category);
+        Task<int> Delete(Category category);
     }
 }

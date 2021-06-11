@@ -34,16 +34,16 @@ namespace Blog.Controllers
         [HttpPost]
         [Route("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<string>> PostComment(int id, Comment comment)
+        public async Task<ActionResult<Comment>> PostComment(int id, Comment comment)
         {
             var post = await PostService.Get(id, "Category");
 
-            if (post == null) return NotFound();
+            if (post == null) return NotFound("The post you're trying to comment on doesn't exist");
 
             comment.UserId = AuthService.GetUserId(User);
             await CommentService.Add(comment);
 
-            return comment.Body;
+            return comment;
         }
     }
 }
