@@ -75,7 +75,7 @@ namespace Blog.Data.Seed
                 }
 
                 userManager.AddToRoleAsync(users[0], "Admin").Wait();
-                userManager.AddToRoleAsync(users[1], "Benutzer");
+                userManager.AddToRoleAsync(users[1], "Benutzer").Wait();
             }
         }
 
