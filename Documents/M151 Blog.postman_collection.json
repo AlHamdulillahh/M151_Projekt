@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "0fb9bd7e-2bff-48bf-aacd-57c68cc89654",
+		"name": "M151 Blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api/Account",
+			"item": [
+				{
+					"name": "List all Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Account/Users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Account",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login to get JWT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"Admin12345\",\r\n  \"password\": \"sqlPHP3306$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8000/api/Account/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Account",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/Post",
+			"item": [
+				{
+					"name": "Get all Posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Post",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Post/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Post/?query=Python",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Python"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"title\": \"Test\",\r\n    \"body\": \"Testli\",\r\n    \"categoryId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8000/api/Post",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 10,\r\n    \"title\": \"Test2\",\r\n    \"body\": \"Testli\",\r\n    \"categoryId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8000/api/Post/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Post/10",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Post",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/Category",
+			"item": [
+				{
+					"name": "All Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Kubernetes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8000/api/Category",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8000/api/Category/14",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Category",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/Comment",
+			"item": [
+				{
+					"name": "Comment on a post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIyN2E3OTgwYS1iZTdhLTQ2MjAtYTE1MS0wNDhmYmViMDNjM2MiLCJVc2VyTmFtZSI6IkFkbWluMTIzNDUiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2MjMzMDk3NzksImV4cCI6MTYyMzkxNDU3OSwiaWF0IjoxNjIzMzA5Nzc5LCJpc3MiOiJCbG9nIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCJ9.SkF5g6YpKKzGV-BZd-QJPRVLMngk8lbu_tLozoyUI4E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"body\": \"Good post!\",\r\n    \"postId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8000/api/Comment/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"Comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
