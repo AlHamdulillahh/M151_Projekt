@@ -96,7 +96,6 @@ namespace Blog.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        [EnableCors]
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
             post.UserId = AuthService.GetUserId(User);
