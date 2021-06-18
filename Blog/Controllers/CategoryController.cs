@@ -41,6 +41,7 @@ namespace Blog.Controllers
         // POST: api/Category
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult<Category>> PostCategory([Bind("Id, Name")] Category category)
         {
             await CategoryService.Add(category);
