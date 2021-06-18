@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Newtonsoft.Json;
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 
 namespace Blog.Controllers
 {
@@ -65,10 +66,7 @@ namespace Blog.Controllers
             };
             var post = await PostService.Get(id, includes);
 
-            if (post == null)
-            {
-                return NotFound("The post you're searching for doesn't exist");
-            }
+            if (post == null) return NotFound("The post you're searching for doesn't exist");
 
             var viewModel = Mapper.Map<Post, PostViewModel>(post);
             viewModel.Comments = Mapper.Map<List<Comment>, List<CommentViewModel>>(post.Comments.ToList());
@@ -98,6 +96,7 @@ namespace Blog.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [EnableCors]
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
             post.UserId = AuthService.GetUserId(User);
@@ -114,10 +113,8 @@ namespace Blog.Controllers
         {
             var post = await PostService.Get(id, "Category");
 
-            if (post == null)
-            {
-                return NotFound("The post you're trying to delete doesn't exist");
-            }
+            if (post == null) return NotFound("The post you're trying to delete doesn't exist");
+            
 
             await PostService.Delete(post);
 

@@ -45,7 +45,7 @@ namespace Blog.Controllers
         {
             await CategoryService.Add(category);
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
+            return Ok(category);
         }
 
         // DELETE: api/Category/5
@@ -54,10 +54,7 @@ namespace Blog.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await CategoryService.Get(id);
-            if (category == null)
-            {
-                return NotFound("The category you're trying to delete doesn't exist");
-            }
+            if (category == null) return NotFound("The category you're trying to delete doesn't exist");
 
             await CategoryService.Delete(category);
 

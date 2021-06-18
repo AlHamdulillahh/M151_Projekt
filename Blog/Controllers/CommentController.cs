@@ -43,7 +43,7 @@ namespace Blog.Controllers
             comment.UserId = AuthService.GetUserId(User);
             await CommentService.Add(comment);
 
-            return comment;
+            return Ok(comment);
         }
     }
 }

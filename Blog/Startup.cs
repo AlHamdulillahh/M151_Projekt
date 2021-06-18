@@ -41,15 +41,10 @@ namespace Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => { o.AddPolicy("AllowOrigin", builder => builder.AllowAnyOrigin()); });
+            services.AddCors();
 
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            /* .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
-            */
 
             services.AddSwaggerGen(c =>
             {
@@ -113,6 +108,9 @@ namespace Blog
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5001"));
 
             app.UseEndpoints(endpoints =>
             {

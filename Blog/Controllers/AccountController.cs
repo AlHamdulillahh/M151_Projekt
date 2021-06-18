@@ -3,6 +3,7 @@ using Blog.Helpers;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace Blog.Controllers
                     return BadRequest(new { ErrorMessage = "Combination of password and Username is incorrect" });
                 }
 
-                return Ok(await _authService.GenerateToken(user, _jwtConfig));
+                return Ok(new { token = await _authService.GenerateToken(user, _jwtConfig) });
             }
             return BadRequest(ModelState);
         }
@@ -73,7 +74,7 @@ namespace Blog.Controllers
                 viewModelBin.Add(viewModel);
             }
 
-            return viewModelBin;
+            return Ok(viewModelBin);
         }
     }
 }
