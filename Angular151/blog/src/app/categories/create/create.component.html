@@ -1,0 +1,26 @@
+<!-- <p>create works!</p> -->
+
+<h1>Create category</h1>
+
+<h4>Category</h4>
+<hr>
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label class="control-label" for="">Name</label>
+                <input
+                class="form-control" 
+                type="text"
+                name="name"
+                id="name"
+                [(ngModel)]="category.name"
+                >
+            </div>
+        
+            <button class="btn btn-secondary" (click)="createCategory()">Create category</button>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" [routerLink]="['posts']">Posts</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" [routerLink]="['search-posts']">Search posts</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-dark" [routerLink]="['categories']">Categories</a>
+            </li>
+
+            <li class="nav-item" *ngIf="encodedToken.role == 'Admin'">
+                <a class="nav-link text-dark" [routerLink]="['users']">Users</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li *ngIf="token != null || token != ''">
+                <a class="nav-link text-dark" (click)="logout()">Logout</a>
+            </li>
+
+            <li>
+                <a class="nav-link text-dark" [routerLink]="['login']">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

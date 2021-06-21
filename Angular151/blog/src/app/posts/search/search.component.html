@@ -1,0 +1,26 @@
+<!-- <p>search works!</p> -->
+
+<div>
+    <div>
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="control-label">Search term</label>
+                <input name="term" id="term" [(ngModel)]="input.term" type="text" class="form-control" placeholder="Enter search term">
+            </div>
+
+            <button (click)="search()" class="btn btn-secondary">Search</button>
+        </form>
+    </div>
+</div>
+
+<hr>
+
+<div class="col-md-4">
+    <strong *ngIf="posts.length == 0">No posts</strong>
+
+    <ul *ngFor="let post of posts">
+        <li>
+            <a [routerLink]="['/post/', post.id]">{{ post.title }}</a>
+        </li>
+    </ul>
+</div>

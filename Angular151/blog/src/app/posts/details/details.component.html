@@ -1,0 +1,46 @@
+<!-- <p>details works!</p> -->
+
+
+<h1>{{ post.title }}</h1>
+
+<span>Create Date: {{ post.createdAt }} Category: {{ post.category.name }}</span>
+<hr>
+
+<p>{{ post.body }}</p>
+
+<hr>
+
+
+
+<h4>Comments</h4>
+<div class="row">
+    <div class="col-md-4" *ngIf="post.comments.length > 0; else noComments">
+        <p *ngFor="let comment of post.comments">
+            {{ comment.body }}
+        </p>
+    </div>
+
+    <ng-template #noComments>
+        <strong>No comments</strong>
+    </ng-template>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-4">
+    <form *ngIf="token != null">
+        <div class="form-group">
+            <label for="" class="control-label">Body</label>
+            <textarea
+            class="form-control"
+            id="body"
+            name="body"
+            [(ngModel)]="comment.body"
+            ></textarea>
+        </div>
+
+        <button (click)="writeComment(post.id)" class="btn btn-secondary">Write comment</button>
+    </form>
+    </div>
+</div>

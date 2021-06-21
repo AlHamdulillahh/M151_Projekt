@@ -1,0 +1,16 @@
+<h1>Posts</h1>
+
+<p *ngIf="encodedToken.role == 'Admin'">
+    <a [routerLink]="['/new-post']">Create new</a>
+</p>
+
+
+<div class="col-md-4">
+<ul *ngFor="let post of posts">
+    <li>
+        <a [routerLink]="['/post/', post.id]">{{ post.title }}</a>
+        <span style="margin-left: 10px" *ngIf="encodedToken.role == 'Admin'" (click)="delete(post.id)" class="btn btn-outline-danger"> Delete</span>
+        <a [routerLink]="['/post/edit/', post.id]" style="margin-left: 10px" *ngIf="encodedToken.role == 'Admin'" class="btn btn-outline-success">Edit</a>
+    </li>
+</ul>
+</div>
