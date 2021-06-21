@@ -41,6 +41,7 @@ namespace Blog.Controllers
             if (post == null) return NotFound("The post you're trying to comment on doesn't exist");
 
             comment.UserId = AuthService.GetUserId(User);
+            comment.CreatedAt = DateTime.Now;
             await CommentService.Add(comment);
 
             return Ok(comment);

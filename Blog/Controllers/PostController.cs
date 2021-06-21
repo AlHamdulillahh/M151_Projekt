@@ -86,6 +86,7 @@ namespace Blog.Controllers
             var existingPost = await PostService.Get(id, "Category");
             if (existingPost == null) return NotFound("The post you're trying to edit doesn't exist");
 
+            post.CreatedAt = existingPost.CreatedAt;
             var modifiedPost = Mapper.Map(post, existingPost);
             await PostService.Update(modifiedPost);
 
