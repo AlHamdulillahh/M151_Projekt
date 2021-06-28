@@ -47,6 +47,7 @@ export class DetailsComponent implements OnInit {
      await this._http.post("https://localhost:8000/api/Comment/" + this._id, {id: 0, body: this.comment.body, postId: this._id}, {headers: headers}).subscribe(result => {
        console.log(result);
      }, error => console.log(error));
+     location.reload();
    }
 
   ngOnInit(): void {

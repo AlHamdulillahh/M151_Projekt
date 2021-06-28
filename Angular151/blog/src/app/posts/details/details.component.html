@@ -38,6 +38,7 @@
             name="body"
             [(ngModel)]="comment.body"
             ></textarea>
+            <span *ngIf="comment.body.length == 0" class="text-danger">Comment Body cannot be empty</span>
         </div>
 
         <button (click)="writeComment(post.id)" class="btn btn-secondary">Write comment</button>

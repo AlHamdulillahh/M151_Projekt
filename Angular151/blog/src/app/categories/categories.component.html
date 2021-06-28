@@ -6,6 +6,8 @@
     <a [routerLink]="['/new-category']">Create new</a>
 </p>
 
+<span *ngIf="!categories">Loading...</span>
+
 <ul *ngFor="let category of categories">
     <li>{{ category.name }} <span *ngIf="encoded.role == 'Admin'" (click)="deleteCategory(category.id)" class="btn btn-outline-danger">Delete</span> </li>
 </ul>

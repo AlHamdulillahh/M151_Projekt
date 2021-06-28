@@ -35,6 +35,7 @@ http.get("https://localhost:8000/api/Post", {headers: headers}).subscribe(result
        console.log(res);
      }, error => console.log(error));
      console.log(id);
+     location.reload();
    }
 
   ngOnInit(): void {

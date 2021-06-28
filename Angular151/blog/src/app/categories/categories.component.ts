@@ -30,6 +30,12 @@ this._http = http;
   ngOnInit(): void {
   }
 
+  public async loadCategories() {
+    this._http.get<Category[]>("https://localhost:8000/api/Category").subscribe(res => {
+      this.categories = res;
+    }, error => console.log(error));
+  }
+
   public async deleteCategory(id: number) {
     var token = localStorage.getItem("appToken");
     var headers = new HttpHeaders({
@@ -38,6 +44,8 @@ this._http = http;
     await this._http.delete("https://localhost:8000/api/Category/" + id, {headers: headers}).subscribe(res => {
       console.log(res);
     }, error => console.log(error));
+
+    location.reload();
   }
 
 }

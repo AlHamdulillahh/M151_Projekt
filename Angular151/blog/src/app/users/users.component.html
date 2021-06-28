@@ -2,6 +2,8 @@
 
 <h1>Users</h1>
 
+<span *ngIf="!users">Loading...</span>
+
 <ul *ngFor="let user of users">
-    <li>Username: {{user.username}} Email: {{user.email}} Rollen: {{user.roles}}</li>
+    <li>Username: {{user.userName}} Email: {{user.email}} Rollen: {{user.roles}}</li>
 </ul>

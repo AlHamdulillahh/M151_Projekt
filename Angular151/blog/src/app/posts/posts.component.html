@@ -5,6 +5,9 @@
 </p>
 
 
+<span *ngIf="!posts">Loading...</span>
+
+
 <div class="col-md-4">
 <ul *ngFor="let post of posts">
     <li>

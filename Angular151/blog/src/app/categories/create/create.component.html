@@ -17,6 +17,7 @@
                 id="name"
                 [(ngModel)]="category.name"
                 >
+                <span *ngIf="category.name.length == 0" class="text-danger">Please enter category name</span>
             </div>
         
             <button class="btn btn-secondary" (click)="createCategory()">Create category</button>
